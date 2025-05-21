@@ -24,7 +24,7 @@ const App = () => (
         <NotificationsProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename= "/smart-sched-calendar">
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/features" element={<Features />} />
