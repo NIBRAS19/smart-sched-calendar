@@ -1,0 +1,352 @@
+/* Calendar Grid Layout */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+}
+
+.calendar-header-cell {
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.calendar-cell {
+  padding: 0.5rem;
+  min-height: 120px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.calendar-today {
+  background-color: var(--primary-light);
+}
+
+/* Event Styles */
+.calendar-event {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: relative;
+}
+
+.calendar-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Day and Week View Styles */
+.week-row, .time-slot {
+  position: relative;
+}
+
+.time-label {
+  font-size: 0.75rem;
+}
+
+.time-content {
+  position: relative;
+  min-height: 3.5rem;
+}
+
+.event-container {
+  position: relative;
+  z-index: 5;
+}
+
+/* Current time indicator */
+.current-time-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--destructive);
+  z-index: 10;
+}
+
+.current-time-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--destructive);
+  position: absolute;
+  left: -4px;
+  top: -3px;
+}
+
+/* Drag and drop styles */
+.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+}
+
+.drag-over {
+  background-color: var(--accent);
+  opacity: 0.7;
+}
+
+/* Event colors */
+:root {
+  --event-work: rgb(25, 118, 210);
+  --event-personal: rgb(76, 175, 80);
+  --event-meeting: rgb(156, 39, 176);
+  --event-reminder: rgb(255, 152, 0);
+  --event-other: rgb(84, 110, 122);
+  --event-holiday: rgb(229, 57, 53);
+  --primary-light: rgba(var(--primary), 0.05);
+}
+
+/* Animation for changing views */
+.view-transition {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-auto-rows: minmax(70px, auto);
+  }
+  
+  .calendar-cell {
+    min-height: 70px;
+    padding: 0.25rem 0.1rem;
+  }
+  
+  .calendar-event {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.25rem;
+    margin-bottom: 0.15rem;
+    border-radius: 3px;
+  }
+  
+  .calendar-header-cell {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  /* Collapse multi-day events */
+  .calendar-cell.has-more .collapsed-events {
+    display: flex;
+    gap: 0.2rem;
+    margin-top: 0.2rem;
+  }
+  
+  .calendar-cell.has-more .event-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  /* Sticky today indicator for mobile */
+  .current-day-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.6rem;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+}
+
+/* Extreme mobile (small phones) */
+@media (max-width: 375px) {
+  .calendar-grid {
+    grid-auto-rows: minmax(60px, auto);
+  }
+  
+  .calendar-cell {
+    min-height: 60px;
+    padding: 0.1rem;
+  }
+  
+  .calendar-header-cell {
+    padding: 0.3rem;
+    font-size: 0.7rem;
+  }
+  
+  .calendar-cell .day-number {
+    font-size: 0.75rem;
+  }
+  
+  /* Simplified event representation */
+  .calendar-event {
+    height: 0.8rem;
+    margin-bottom: 0.1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Touch support */
+.touch-target {
+  position: relative;
+}
+
+.touch-target::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: 1;
+}
+
+/* Day Calendar Event Styles */
+.event-container {
+  position: relative;
+  z-index: 5;
+  min-height: 60px;
+}
+
+.event-column {
+  position: absolute;
+  height: 100%;
+  padding: 0 2px;
+}
+
+.calendar-event {
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.calendar-event .font-medium {
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.calendar-event .text-xs {
+  font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+/* Time slot styles */
+.time-slot {
+  position: relative;
+  min-height: 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.time-slot:last-child {
+  border-bottom: none;
+}
+
+.time-label {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  padding-right: 0.5rem;
+  user-select: none;
+}
+
+.time-content {
+  position: relative;
+  flex: 1;
+  min-height: 60px;
+  padding: 0.25rem 0.5rem;
+  border-left: 1px solid var(--border);
+  transition: background-color 0.2s ease;
+}
+
+.time-content:hover {
+  background-color: var(--muted);
+}
+
+/* Current time indicator */
+.current-time-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--destructive);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.current-time-dot {
+  position: absolute;
+  left: -4px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--destructive);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Empty slot styles */
+.empty-slot {
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.empty-slot:hover {
+  background-color: var(--muted);
+}
+
+/* Event colors with better contrast */
+:root {
+  --event-work: rgb(25, 118, 210);
+  --event-personal: rgb(46, 125, 50);
+  --event-meeting: rgb(123, 31, 162);
+  --event-reminder: rgb(230, 81, 0);
+  --event-other: rgb(69, 90, 100);
+  --event-holiday: rgb(198, 40, 40);
+  --primary-light: rgba(var(--primary), 0.05);
+}

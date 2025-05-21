@@ -1,0 +1,215 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+
+    --primary: 252 56% 57%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 252 56% 57%;
+
+    --radius: 1rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 240 10% 3.9%;
+    --sidebar-primary: 252 56% 57%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 252 56% 57%;
+    
+    /* Event type colors with softer palette */
+    --event-work: #7c65e2;
+    --event-personal: #6ec0ff;
+    --event-meeting: #54dbb0;
+    --event-reminder: #ffc168;
+    --event-other: #b18eff;
+    --event-holiday: #ff8787;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 252 56% 65%;
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 252 56% 57%;
+
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 252 56% 65%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 252 56% 57%;
+    
+    /* Event colors for dark mode - brighter and more vibrant */
+    --event-work: #8a78ff;
+    --event-personal: #59c9ff;
+    --event-meeting: #4ae6b5;
+    --event-reminder: #ffd27f;
+    --event-other: #b99aff;
+    --event-holiday: #ff9898;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+}
+
+@layer components {
+  /* Month Calendar Styles */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .calendar-cell {
+    @apply min-h-[80px] sm:min-h-[120px] border p-1 transition-colors hover:bg-muted/30;
+  }
+
+  .calendar-header-cell {
+    @apply py-3 text-center font-medium text-sm;
+  }
+
+  .calendar-date {
+    @apply text-xs font-medium mb-1 text-muted-foreground;
+  }
+
+  .calendar-day {
+    @apply text-sm font-medium;
+  }
+
+  .calendar-today {
+    @apply bg-primary/5 relative;
+  }
+
+  .calendar-today .calendar-day {
+    @apply text-primary;
+  }
+
+  .calendar-event {
+    @apply text-sm rounded-lg px-3 py-1.5 mb-1.5 truncate text-white cursor-pointer transition-all hover:opacity-90 hover:shadow-md;
+  }
+
+  .calendar-holiday {
+    @apply text-xs rounded-lg px-2 py-1 mb-1 truncate text-white bg-destructive font-medium;
+  }
+  
+  /* Week Calendar Styles */
+  .week-calendar {
+    @apply h-[calc(100vh-12rem)] sm:h-[calc(100vh-16rem)] rounded-xl overflow-hidden;
+  }
+
+  .week-header {
+    @apply font-medium text-sm;
+  }
+  
+  /* Day Calendar Styles */
+  .day-calendar {
+    @apply h-[calc(100vh-12rem)] sm:h-[calc(100vh-16rem)] overflow-y-auto rounded-xl;
+  }
+
+  /* No scrollbar utilities */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* Internet Explorer and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
+  /* Glass morphism effect for cards and dialogs */
+  .glass-morphism {
+    @apply backdrop-blur-md bg-white/90 dark:bg-black/50 border border-white/20 dark:border-white/10 shadow-lg;
+  }
+
+  /* Animation classes */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* Mobile Optimizations */
+  @media (max-width: 640px) {
+    .calendar-grid {
+      font-size: 0.75rem;
+    }
+    
+    .calendar-cell {
+      min-height: 70px;
+      padding: 0.25rem;
+    }
+    
+    .calendar-event {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.35rem;
+    }
+    
+    .calendar-holiday {
+      font-size: 0.65rem;
+      padding: 0.1rem 0.35rem;
+    }
+  }
+}
